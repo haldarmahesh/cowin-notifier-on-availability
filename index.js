@@ -1,6 +1,6 @@
 const notifier = require("node-notifier");
 const path = require("path");
-const request = require("supertest");
+const axios = require("axios");
 const config = require("./config.json");
 const CHECKAFTER_SECONDS = config.CHECK_AFTER_HOW_MANY_SECONDS;
 const PIN_CODE = config.PIN_CODE;
@@ -9,13 +9,12 @@ function check() {
   console.log("===============");
   console.log("Checking now");
   console.log("===============");
-  return request("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public") // app server is an instance of Class: http.Server
-    .get(`/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`)
-    .set("accept", "application/json")
-    .set("Content-Type", "application/json")
-    .expect("Content-Type", /json/)
-    .expect(200)
+  axios
+    .get(
+      `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`
+    )
     .then((response) => {
+      console.log(response.status);
       const { body } = response;
       body.centers.forEach((item) => {
         item.sessions.forEach((sessionItem) => {
@@ -39,6 +38,14 @@ function check() {
           }
         });
       });
+    })
+    .catch((err) => {
+      console.log("got err");
+      if (err.response.status === 400) {
+        console.log("!!!!! WRONG CONFIG");
+        console.log("error details");
+        console.log(err.response.data);
+      }
     });
 }
 
