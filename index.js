@@ -4,7 +4,7 @@ const axios = require("axios");
 const config = require("./config.json");
 const CHECKAFTER_SECONDS = config.CHECK_AFTER_HOW_MANY_SECONDS;
 const PIN_CODE = config.PIN_CODE;
-const DATE = config.CHECK_FROM_THIS_AND_NEXT_DAYS;
+const DATE = config.CHECK_FROM_THIS_AND_NEXT_SEVEN_DAYS;
 function check() {
   console.log("===============");
   console.log("Checking now");
