@@ -1,0 +1,16 @@
+{
+  "name": "item",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "alert-sound-notify": "0.0.8",
+    "node-notifier": "^9.0.1",
+    "supertest": "^6.1.3"
+  }
+}
