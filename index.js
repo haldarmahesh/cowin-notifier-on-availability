@@ -14,12 +14,7 @@ function check() {
       `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`
     )
     .then((response) => {
-      console.log(
-        "data",
-        `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`
-      );
       const body = response.data;
-      console.log("body", body);
       body.centers.forEach((item) => {
         item.sessions.forEach((sessionItem) => {
           if (
