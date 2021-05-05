@@ -14,8 +14,12 @@ function check() {
       `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`
     )
     .then((response) => {
-      console.log(response.status);
-      const { body } = response;
+      console.log(
+        "data",
+        `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`
+      );
+      const body = response.data;
+      console.log("body", body);
       body.centers.forEach((item) => {
         item.sessions.forEach((sessionItem) => {
           if (
@@ -40,8 +44,8 @@ function check() {
       });
     })
     .catch((err) => {
-      console.log("got err");
-      if (err.response.status === 400) {
+      console.log("got err", err);
+      if (err.response && err.response.status === 400) {
         console.log("!!!!! WRONG CONFIG");
         console.log("error details");
         console.log(err.response.data);
