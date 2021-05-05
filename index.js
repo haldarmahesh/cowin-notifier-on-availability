@@ -9,7 +9,6 @@ function check() {
   console.log("===============");
   console.log("Checking now");
   console.log("===============");
-
   return request("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public") // app server is an instance of Class: http.Server
     .get(`/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`)
     .set("accept", "application/json")
@@ -25,8 +24,8 @@ function check() {
             config.NOTIFY_WHNE_AVAILABILITY_CAPACITY_IS_GREATER_THAN
           ) {
             notifier.notify({
-              title: "Yayy got something for you",
-              message: "you can book now",
+              title: "Yayy, you got slots available now",
+              message: "Please book now",
               sound: true, // Only Notification Center or Windows Toasters
               wait: true, // Wait with callback, until user action is taken against notification, does not apply to Windows Toasters as they always wait or notify-send as it does not support the wait option
             });
