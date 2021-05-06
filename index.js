@@ -5,6 +5,7 @@ const config = require("./config.json");
 const CHECKAFTER_SECONDS = config.RE_CHECK_AFTER_SECONDS;
 const PIN_CODE = config.PIN_CODE;
 const DATE = config.CHECK_FROM_THIS_AND_NEXT_SEVEN_DAYS;
+let attemptCount = 0;
 function check() {
   console.log("===============");
   console.log("Checking now");
@@ -20,6 +21,8 @@ function check() {
       }
     )
     .then((response) => {
+      attemptCount++;
+      let foundInthisAttempt = false;
       const body = response.data;
       body.centers.forEach((item) => {
         item.sessions.forEach((sessionItem) => {
@@ -27,6 +30,7 @@ function check() {
             sessionItem.available_capacity >
             config.NOTIFY_WHNE_AVAILABILITY_CAPACITY_IS_GREATER_THAN
           ) {
+            foundInthisAttempt = true;
             notifier.notify({
               title: "Yayy, you got slots available now",
               message: "Please book now",
@@ -43,6 +47,13 @@ function check() {
           }
         });
       });
+
+      if (!foundInthisAttempt) {
+        console.log(
+          `We found no slots in attempt #${attemptCount}, let's try again in next attempt`
+        );
+        console.log("===============");
+      }
     })
     .catch((err) => {
       console.log("got err", err);
