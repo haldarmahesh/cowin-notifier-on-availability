@@ -5,10 +5,17 @@ const config = require("./config.json");
 const CHECKAFTER_SECONDS = config.RE_CHECK_AFTER_SECONDS;
 const PIN_CODE = config.PIN_CODE;
 const DATE = config.CHECK_FROM_THIS_AND_NEXT_SEVEN_DAYS;
+const MINIMUM_AGE_LIMIT = config.MINIMUM_AGE_LIMIT ?? 18;
 let attemptCount = 0;
 function check() {
   console.log("===============");
   console.log("Checking now");
+  console.log(`Config: 
+  Check after seconds: ${CHECKAFTER_SECONDS}
+  Pin code: ${PIN_CODE}
+  Min age: ${MINIMUM_AGE_LIMIT}
+  Date: ${DATE}
+  `);
   console.log("===============");
   axios
     .get(
@@ -28,7 +35,8 @@ function check() {
         item.sessions.forEach((sessionItem) => {
           if (
             sessionItem.available_capacity >
-            config.NOTIFY_WHNE_AVAILABILITY_CAPACITY_IS_GREATER_THAN
+              config.NOTIFY_WHNE_AVAILABILITY_CAPACITY_IS_GREATER_THAN &&
+            sessionItem.min_age_limit <= MINIMUM_AGE_LIMIT
           ) {
             foundInthisAttempt = true;
             notifier.notify({
@@ -39,12 +47,13 @@ function check() {
             });
 
             console.log(
-              "Available",
+              "Name:",
               item.name,
-              "Availability: ",
+              "\nNumber of slots available: ",
               sessionItem.available_capacity
             );
             console.log("Minimum age limit: ", sessionItem.min_age_limit);
+            console.log("===");
           }
         });
       });
