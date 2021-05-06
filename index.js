@@ -11,7 +11,13 @@ function check() {
   console.log("===============");
   axios
     .get(
-      `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`
+      `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`,
+      {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+        },
+      }
     )
     .then((response) => {
       const body = response.data;
