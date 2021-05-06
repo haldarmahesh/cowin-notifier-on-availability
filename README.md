@@ -19,7 +19,7 @@ Cowin is a government website where the Indians are supposed to book slots to ge
 
 ```
 {
-    "CHECK_AFTER_HOW_MANY_SECONDS": 4,                       // Interval to check after how many seconds
+    "RE_CHECK_AFTER_SECONDS": 4,                       // Re trigger the check, after these many seconds
     "PIN_CODE": 271801,                                      // Your are pin code
     "CHECK_FROM_THIS_AND_NEXT_SEVEN_DAYS": "05-05-2021",           // Set from which date you want to check for availability
     "NOTIFY_WHNE_AVAILABILITY_CAPACITY_IS_GREATER_THAN": 1   // Set filter, how many availability you need.
