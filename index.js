@@ -41,9 +41,10 @@ function check() {
             console.log(
               "Available",
               item.name,
-              "Availability ",
-              item.sessions[0].available_capacity
+              "Availability: ",
+              sessionItem.available_capacity
             );
+            console.log("Minimum age limit: ", sessionItem.min_age_limit);
           }
         });
       });
