@@ -7,26 +7,29 @@ const PIN_CODE = config.PIN_CODE;
 const DATE = config.CHECK_FROM_THIS_AND_NEXT_SEVEN_DAYS;
 const MINIMUM_AGE_LIMIT = config.MINIMUM_AGE_LIMIT ?? 18;
 let attemptCount = 0;
+const DISTRICT_ID = config.DISTRICT_ID;
+
 function check() {
   console.log("===============");
   console.log("Checking now");
-  console.log(`Config: 
-  Check after seconds: ${CHECKAFTER_SECONDS}
-  Pin code: ${PIN_CODE}
-  Min age: ${MINIMUM_AGE_LIMIT}
-  Date: ${DATE}
-  `);
+  // console.log(`Config:
+  // Check after seconds: ${CHECKAFTER_SECONDS}
+  // Pin code: ${PIN_CODE}
+  // Min age: ${MINIMUM_AGE_LIMIT}
+  // Date: ${DATE}
+  // `);
   console.log("===============");
+  let getResultPath = `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`;
+  if (DISTRICT_ID) {
+    getResultPath = `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${DISTRICT_ID}&date=${DATE}`;
+  }
   axios
-    .get(
-      `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${PIN_CODE}&date=${DATE}`,
-      {
-        headers: {
-          "User-Agent":
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
-        },
-      }
-    )
+    .get(getResultPath, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+      },
+    })
     .then((response) => {
       attemptCount++;
       let foundInthisAttempt = false;
